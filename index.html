@@ -1,92 +1,946 @@
 <!DOCTYPE html>
-
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-```
-<title>Jenkins Pipeline Demo</title>
+    <title>FitForge | Premium Fitness Club</title>
 
-<style>
-    * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-    }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-    body {
-        font-family: Arial, sans-serif;
-        min-height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: linear-gradient(135deg, #141e30, #243b55);
-        color: white;
-    }
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    .container {
-        text-align: center;
-        padding: 50px;
-    }
+        html {
+            scroll-behavior: smooth;
+        }
 
-    h1 {
-        font-size: 45px;
-        margin-bottom: 20px;
-    }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #080808;
+            color: #ffffff;
+            line-height: 1.6;
+        }
 
-    p {
-        font-size: 20px;
-        margin: 15px 0;
-    }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
 
-    .box {
-        margin-top: 30px;
-        padding: 20px 30px;
-        border: 2px solid white;
-        border-radius: 10px;
-        display: inline-block;
-    }
+        /* NAVBAR */
 
-    .success {
-        font-size: 18px;
-        font-weight: bold;
-    }
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(8, 8, 8, 0.85);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
 
-    footer {
-        margin-top: 30px;
-        opacity: 0.8;
-    }
-</style>
-```
+        .logo {
+            font-size: 25px;
+            font-weight: 900;
+            letter-spacing: -1px;
+        }
 
+        .logo span {
+            color: #ff4d00;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #ccc;
+            font-size: 14px;
+            font-weight: 600;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ff4d00;
+        }
+
+        .nav-btn {
+            background: #ff4d00;
+            padding: 11px 20px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 800;
+        }
+
+        /* HERO */
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 120px 7% 80px;
+            position: relative;
+            overflow: hidden;
+            background:
+                radial-gradient(circle at 80% 30%, rgba(255,77,0,0.20), transparent 35%),
+                radial-gradient(circle at 10% 80%, rgba(255,77,0,0.08), transparent 30%);
+        }
+
+        .hero-content {
+            max-width: 700px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .badge {
+            display: inline-block;
+            border: 1px solid rgba(255,77,0,0.5);
+            color: #ff6a2a;
+            padding: 8px 14px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            margin-bottom: 22px;
+        }
+
+        .hero h1 {
+            font-size: clamp(48px, 7vw, 88px);
+            line-height: 0.98;
+            letter-spacing: -4px;
+            font-weight: 900;
+            margin-bottom: 25px;
+        }
+
+        .hero h1 span {
+            color: #ff4d00;
+        }
+
+        .hero p {
+            color: #aaa;
+            max-width: 570px;
+            font-size: 17px;
+            margin-bottom: 35px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .primary-btn {
+            background: #ff4d00;
+            padding: 15px 27px;
+            border-radius: 7px;
+            font-weight: 800;
+            transition: 0.3s;
+        }
+
+        .primary-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 35px rgba(255,77,0,0.3);
+        }
+
+        .secondary-btn {
+            border: 1px solid #444;
+            padding: 15px 27px;
+            border-radius: 7px;
+            font-weight: 700;
+            transition: 0.3s;
+        }
+
+        .secondary-btn:hover {
+            border-color: #ff4d00;
+            color: #ff4d00;
+        }
+
+        /* STATS */
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            padding: 45px 7%;
+            background: #111;
+            border-top: 1px solid #222;
+            border-bottom: 1px solid #222;
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat h3 {
+            color: #ff4d00;
+            font-size: 32px;
+            font-weight: 900;
+        }
+
+        .stat p {
+            color: #888;
+            font-size: 13px;
+        }
+
+        /* COMMON */
+
+        section {
+            padding: 100px 7%;
+        }
+
+        .section-title {
+            max-width: 650px;
+            margin-bottom: 50px;
+        }
+
+        .section-title small {
+            color: #ff4d00;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .section-title h2 {
+            font-size: 45px;
+            line-height: 1.1;
+            margin-top: 12px;
+        }
+
+        .section-title p {
+            color: #888;
+            margin-top: 15px;
+        }
+
+        /* PROGRAMS */
+
+        .programs {
+            background: #0c0c0c;
+        }
+
+        .program-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .program {
+            padding: 35px;
+            background: #141414;
+            border: 1px solid #242424;
+            border-radius: 12px;
+            transition: 0.35s;
+        }
+
+        .program:hover {
+            transform: translateY(-8px);
+            border-color: #ff4d00;
+        }
+
+        .program-icon {
+            font-size: 40px;
+            margin-bottom: 20px;
+        }
+
+        .program h3 {
+            margin-bottom: 10px;
+            font-size: 21px;
+        }
+
+        .program p {
+            color: #888;
+            font-size: 14px;
+        }
+
+        /* TRAINERS */
+
+        .trainer-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .trainer {
+            background: #111;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #222;
+        }
+
+        .trainer-image {
+            height: 260px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 85px;
+            background:
+                linear-gradient(135deg, #1e1e1e, #101010);
+        }
+
+        .trainer-info {
+            padding: 25px;
+        }
+
+        .trainer-info h3 {
+            font-size: 20px;
+        }
+
+        .trainer-info p {
+            color: #ff4d00;
+            font-size: 13px;
+            margin-top: 5px;
+        }
+
+        /* PRICING */
+
+        .pricing {
+            background: #0c0c0c;
+        }
+
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 22px;
+        }
+
+        .price-card {
+            padding: 35px;
+            border: 1px solid #282828;
+            background: #131313;
+            border-radius: 12px;
+        }
+
+        .price-card.featured {
+            border: 2px solid #ff4d00;
+            transform: scale(1.03);
+        }
+
+        .popular {
+            display: inline-block;
+            background: #ff4d00;
+            padding: 5px 10px;
+            font-size: 10px;
+            font-weight: 800;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+
+        .price-card h3 {
+            font-size: 22px;
+        }
+
+        .price {
+            font-size: 42px;
+            font-weight: 900;
+            margin: 15px 0;
+        }
+
+        .price span {
+            font-size: 13px;
+            color: #777;
+            font-weight: 400;
+        }
+
+        .features {
+            list-style: none;
+            margin: 25px 0;
+        }
+
+        .features li {
+            padding: 8px 0;
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .features li::before {
+            content: "✓";
+            color: #ff4d00;
+            font-weight: 900;
+            margin-right: 10px;
+        }
+
+        /* TESTIMONIALS */
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .testimonial {
+            background: #131313;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #222;
+        }
+
+        .stars {
+            color: #ff4d00;
+            margin-bottom: 15px;
+        }
+
+        .testimonial p {
+            color: #aaa;
+            font-size: 14px;
+        }
+
+        .person {
+            margin-top: 20px;
+            font-weight: 700;
+        }
+
+        .person span {
+            display: block;
+            color: #777;
+            font-size: 12px;
+            font-weight: 400;
+        }
+
+        /* CTA */
+
+        .cta {
+            margin: 40px 7% 100px;
+            padding: 80px 50px;
+            text-align: center;
+            border-radius: 15px;
+            background:
+                radial-gradient(circle at center, rgba(255,77,0,0.25), transparent 60%),
+                #141414;
+            border: 1px solid #292929;
+        }
+
+        .cta h2 {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .cta p {
+            color: #999;
+            margin-bottom: 30px;
+        }
+
+        /* FOOTER */
+
+        footer {
+            border-top: 1px solid #222;
+            padding: 40px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #777;
+            font-size: 13px;
+        }
+
+        footer strong {
+            color: white;
+        }
+
+        /* RESPONSIVE */
+
+        @media (max-width: 900px) {
+
+            .nav-links {
+                display: none;
+            }
+
+            .stats,
+            .program-grid,
+            .trainer-grid,
+            .pricing-grid,
+            .testimonial-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero h1 {
+                letter-spacing: -2px;
+            }
+        }
+
+        @media (max-width: 600px) {
+
+            nav {
+                padding: 18px 5%;
+            }
+
+            .nav-btn {
+                display: none;
+            }
+
+            section {
+                padding: 70px 5%;
+            }
+
+            .hero {
+                padding: 120px 5% 70px;
+            }
+
+            .hero h1 {
+                font-size: 52px;
+            }
+
+            .stats,
+            .program-grid,
+            .trainer-grid,
+            .pricing-grid,
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title h2 {
+                font-size: 35px;
+            }
+
+            .price-card.featured {
+                transform: none;
+            }
+
+            .cta {
+                margin: 20px 5% 70px;
+                padding: 55px 25px;
+            }
+
+            .cta h2 {
+                font-size: 35px;
+            }
+
+            footer {
+                flex-direction: column;
+                gap: 10px;
+                text-align: center;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-```
-<div class="container">
+    <!-- NAVBAR -->
 
-    <h1>🚀 Jenkins Pipeline Demo</h1>
+    <nav>
+        <a href="#" class="logo">FIT<span>FORGE</span></a>
 
-    <p>Welcome to my Node.js application!</p>
+        <ul class="nav-links">
+            <li><a href="#programs">Programs</a></li>
+            <li><a href="#trainers">Trainers</a></li>
+            <li><a href="#pricing">Membership</a></li>
+            <li><a href="#reviews">Reviews</a></li>
+        </ul>
 
-    <p>
-        This application is deployed automatically using Jenkins.
-    </p>
+        <a href="#join" class="nav-btn">JOIN NOW</a>
+    </nav>
 
-    <div class="box">
-        <div class="success">
-            ✅ Deployment Successful
+
+    <!-- HERO -->
+
+    <section class="hero">
+
+        <div class="hero-content">
+
+            <div class="badge">PREMIUM FITNESS CLUB</div>
+
+            <h1>
+                BUILD YOUR
+                <span>STRONGEST</span>
+                SELF.
+            </h1>
+
+            <p>
+                Train smarter. Get stronger. Live better.
+                Join a community built for people who are serious
+                about becoming their best version.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="#join" class="primary-btn">Start Training →</a>
+                <a href="#programs" class="secondary-btn">Explore Programs</a>
+            </div>
+
         </div>
+
+    </section>
+
+
+    <!-- STATS -->
+
+    <div class="stats">
+
+        <div class="stat">
+            <h3>1,200+</h3>
+            <p>Active Members</p>
+        </div>
+
+        <div class="stat">
+            <h3>15+</h3>
+            <p>Expert Trainers</p>
+        </div>
+
+        <div class="stat">
+            <h3>30+</h3>
+            <p>Weekly Classes</p>
+        </div>
+
+        <div class="stat">
+            <h3>8+</h3>
+            <p>Years Experience</p>
+        </div>
+
     </div>
 
+
+    <!-- PROGRAMS -->
+
+    <section class="programs" id="programs">
+
+        <div class="section-title">
+            <small>WHAT WE OFFER</small>
+            <h2>Training designed for real results.</h2>
+            <p>
+                Whether you're building strength, improving fitness,
+                or transforming your lifestyle, we've got a program
+                for you.
+            </p>
+        </div>
+
+        <div class="program-grid">
+
+            <div class="program">
+                <div class="program-icon">🏋️</div>
+                <h3>Strength Training</h3>
+                <p>
+                    Build strength and muscle with structured
+                    weight training programs.
+                </p>
+            </div>
+
+            <div class="program">
+                <div class="program-icon">🔥</div>
+                <h3>HIIT & Cardio</h3>
+                <p>
+                    High intensity workouts designed to burn calories
+                    and improve endurance.
+                </p>
+            </div>
+
+            <div class="program">
+                <div class="program-icon">🥊</div>
+                <h3>Combat Fitness</h3>
+                <p>
+                    Improve speed, coordination and conditioning
+                    with combat-inspired workouts.
+                </p>
+            </div>
+
+            <div class="program">
+                <div class="program-icon">🧘</div>
+                <h3>Yoga & Mobility</h3>
+                <p>
+                    Improve flexibility, balance and recovery with
+                    guided mobility sessions.
+                </p>
+            </div>
+
+            <div class="program">
+                <div class="program-icon">🏃</div>
+                <h3>Functional Training</h3>
+                <p>
+                    Improve everyday movement, stability and overall
+                    athletic performance.
+                </p>
+            </div>
+
+            <div class="program">
+                <div class="program-icon">👤</div>
+                <h3>Personal Training</h3>
+                <p>
+                    One-on-one coaching with personalized training
+                    and nutrition guidance.
+                </p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- TRAINERS -->
+
+    <section id="trainers">
+
+        <div class="section-title">
+            <small>MEET THE TEAM</small>
+            <h2>Train with the best.</h2>
+            <p>
+                Our certified coaches are here to push you,
+                guide you and help you reach your goals.
+            </p>
+        </div>
+
+        <div class="trainer-grid">
+
+            <div class="trainer">
+                <div class="trainer-image">💪</div>
+
+                <div class="trainer-info">
+                    <h3>Alex Morgan</h3>
+                    <p>Strength & Conditioning Coach</p>
+                </div>
+            </div>
+
+            <div class="trainer">
+                <div class="trainer-image">🏋️</div>
+
+                <div class="trainer-info">
+                    <h3>Sarah Wilson</h3>
+                    <p>Fitness & Nutrition Coach</p>
+                </div>
+            </div>
+
+            <div class="trainer">
+                <div class="trainer-image">🥊</div>
+
+                <div class="trainer-info">
+                    <h3>Daniel Carter</h3>
+                    <p>HIIT & Performance Coach</p>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- PRICING -->
+
+    <section class="pricing" id="pricing">
+
+        <div class="section-title">
+            <small>MEMBERSHIP</small>
+            <h2>Choose your commitment.</h2>
+            <p>
+                Simple memberships with everything you need
+                to reach your fitness goals.
+            </p>
+        </div>
+
+        <div class="pricing-grid">
+
+            <div class="price-card">
+
+                <h3>Starter</h3>
+
+                <div class="price">
+                    ₹999 <span>/ month</span>
+                </div>
+
+                <ul class="features">
+                    <li>Gym Access</li>
+                    <li>Basic Equipment</li>
+                    <li>Locker Access</li>
+                    <li>2 Group Classes</li>
+                </ul>
+
+                <a href="#join" class="secondary-btn">Choose Plan</a>
+
+            </div>
+
+
+            <div class="price-card featured">
+
+                <div class="popular">MOST POPULAR</div>
+
+                <h3>Pro</h3>
+
+                <div class="price">
+                    ₹1,999 <span>/ month</span>
+                </div>
+
+                <ul class="features">
+                    <li>Unlimited Gym Access</li>
+                    <li>All Group Classes</li>
+                    <li>Personal Training Session</li>
+                    <li>Nutrition Guidance</li>
+                </ul>
+
+                <a href="#join" class="primary-btn">Choose Plan</a>
+
+            </div>
+
+
+            <div class="price-card">
+
+                <h3>Elite</h3>
+
+                <div class="price">
+                    ₹3,499 <span>/ month</span>
+                </div>
+
+                <ul class="features">
+                    <li>Everything in Pro</li>
+                    <li>Weekly Personal Training</li>
+                    <li>Custom Workout Plan</li>
+                    <li>Priority Support</li>
+                </ul>
+
+                <a href="#join" class="secondary-btn">Choose Plan</a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- TESTIMONIALS -->
+
+    <section id="reviews">
+
+        <div class="section-title">
+            <small>MEMBER STORIES</small>
+            <h2>Results that speak for themselves.</h2>
+        </div>
+
+        <div class="testimonial-grid">
+
+            <div class="testimonial">
+
+                <div class="stars">★★★★★</div>
+
+                <p>
+                    "FitForge completely changed the way I train.
+                    The trainers are amazing and the community is
+                    extremely motivating."
+                </p>
+
+                <div class="person">
+                    Rahul Sharma
+                    <span>Member for 2 years</span>
+                </div>
+
+            </div>
+
+
+            <div class="testimonial">
+
+                <div class="stars">★★★★★</div>
+
+                <p>
+                    "The best part is the structured programs.
+                    I finally have a workout routine that I can
+                    actually follow consistently."
+                </p>
+
+                <div class="person">
+                    Priya Mehta
+                    <span>Member for 1 year</span>
+                </div>
+
+            </div>
+
+
+            <div class="testimonial">
+
+                <div class="stars">★★★★★</div>
+
+                <p>
+                    "Professional trainers, great equipment and
+                    an amazing atmosphere. Highly recommended."
+                </p>
+
+                <div class="person">
+                    Arjun Patel
+                    <span>Member for 8 months</span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- CTA -->
+
+    <div class="cta" id="join">
+
+        <h2>Ready to become stronger?</h2>
+
+        <p>
+            Your transformation starts with one decision.
+            Take the first step today.
+        </p>
+
+        <a href="mailto:hello@fitforge.com" class="primary-btn">
+            Join FitForge →
+        </a>
+
+    </div>
+
+
+    <!-- FOOTER -->
+
     <footer>
-        GitHub → Jenkins → Target Server → PM2
+
+        <div>
+            © 2026 <strong>FitForge Fitness Club</strong>
+        </div>
+
+        <div>
+            Built with Node.js • Deployed with Jenkins • AWS EC2
+        </div>
+
     </footer>
 
-</div>
-```
+
+    <script>
+
+        // Simple scroll animation
+
+        const elements = document.querySelectorAll(
+            '.program, .trainer, .price-card, .testimonial'
+        );
+
+        const observer = new IntersectionObserver(
+            entries => {
+
+                entries.forEach(entry => {
+
+                    if (entry.isIntersecting) {
+
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+
+                    }
+
+                });
+
+            },
+            {
+                threshold: 0.15
+            }
+        );
+
+
+        elements.forEach(element => {
+
+            element.style.opacity = '0';
+            element.style.transform = 'translateY(25px)';
+            element.style.transition = 'all 0.6s ease';
+
+            observer.observe(element);
+
+        });
+
+    </script>
 
 </body>
 </html>
